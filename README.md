@@ -9,13 +9,13 @@
 
 ## Installation
 
-1 - Cloner le dépot via github desktop;
-2 - Ouvrir un terminal et faire composer install pour installer les dépendances php et addons ex : bootstrap
-3 - Copier le fichier .env.example en .env
-4 - Sur terminal : php artisan key:generate
-5 - Creer une bd sur mysql
-6 - Ouvrir le dossier .env copié manuellement et y inscrire le nom de la bd qui vient d'etre créer
-7 - Sur terminal : faire php artisan migrate --seed
-8 - Sur terminal : php artisan serve et ouvrir le site sur un navigateur
+1 - Cloner le dépot via github desktop <br>
+2 - Ouvrir un terminal et faire composer install pour installer les dépendances php et addons ex : bootstrap <br>
+3 - Copier le fichier .env.example en .env <br>
+4 - Sur terminal : php artisan key:generate <br>
+5 - Creer une bd sur mysql <br>
+6 - Ouvrir le dossier .env copié manuellement et y inscrire le nom de la bd qui vient d'etre créer <br>
+7 - Sur terminal : faire php artisan migrate --seed <br>
+8 - Sur terminal : php artisan serve et ouvrir le site sur un navigateur <br>
 
 8.1 - Si sur http://127.0.0.1:8000 une page blanche s'affiche, faites sur terminal : npm install puis npm run dev
