@@ -1,0 +1,7 @@
+:
+Reservations: id, timestamps, date
+réserver, 11 Reservations, 0N Places:
+
+Users: id, nom, prenom, email, password, isadmin
+posseder, 0N Users, 11 Reservations:
+Places: id, libelle
