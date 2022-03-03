@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +20,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::resources([
+    'users' => UserManagementController::class,
+    'places' => PlaceController::class,
+    'dashboard'=>DashboardController::class
+]);
+
+//route custom pour delete
+Route::get('/remove/{id}/', [UserManagementController::class, 'remove'])->name('users.remove');
+Route::get('/downgrade/{id}/', [PlaceController::class, 'downgrade'])->name('places.downgrade');
+Route::get('/erase/{id}/', [PlaceController::class, 'erase'])->name('places.erase');
+Route::get('/delete/{id}/', [UserManagementController::class, 'delete'])->name('users.delete');
+
+//route attribution place
+Route::get('/reserve', [UserManagementController::class, 'reserve'])->name('users.reserve');
 
 require __DIR__.'/auth.php';
 

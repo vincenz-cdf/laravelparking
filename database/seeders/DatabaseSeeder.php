@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Place;
 use App\Models\Reservation;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,8 +18,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
-        \App\Models\Reservation::factory(10)->create();
+        \App\Models\User::factory(5)->create();
         \App\Models\Place::factory(10)->create();
+
+        User::create([
+            'name'=>'admin',
+            'prenom'=>'admin',
+            'email'=>'admin@mail.fr',
+            'admin'=>1,
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'), // password
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name'=>'user',
+            'prenom'=>'user',
+            'email'=>'user@mail.fr',
+            'admin'=>0,
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'), // password
+            'remember_token' => Str::random(10),
+        ]);
+
+        for($i=1;$i<=5;$i++)
+        {
+            Reservation::create([
+                'duree' => 3600,
+                'user_id' => $i,
+                'place_id' => $i
+            ]);
+        }
+
     }
 }
