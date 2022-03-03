@@ -13,8 +13,10 @@ class PlaceFactory extends Factory
      */
     public function definition()
     {
+        $libelle = $this->faker->randomElement($array = array ('a','b','c'));
+        $libelle .= $this->faker->numberBetween($min = 1, $max = 9);
         return [
-            'libelle' => "XXXXX",
+            'libelle' => $libelle,
         ];
     }
 }
