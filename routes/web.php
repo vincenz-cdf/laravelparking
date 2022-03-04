@@ -26,6 +26,9 @@ Route::resources([
     'dashboard'=>DashboardController::class
 ]);
 
+//Historique
+Route::get('/history', [PlaceController::class, 'history'])->name('places.history');
+
 //route custom pour delete
 Route::get('/remove/{id}/', [UserManagementController::class, 'remove'])->name('users.remove');
 Route::get('/downgrade/{id}/', [PlaceController::class, 'downgrade'])->name('places.downgrade');

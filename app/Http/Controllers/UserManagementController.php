@@ -18,16 +18,19 @@ class UserManagementController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request['search'] ?? "";
-        if($search != "")
+        if($request->user()->can('viewAny',User::class))
         {
-            $salaries = User::where('name','LIKE',"%$search%")->orWhere('email','LIKE',"%$search%")->get();
+            $search = $request['search'] ?? "";
+            if($search != "")
+            {
+                $salaries = User::where('name','LIKE',"%$search%")->orWhere('email','LIKE',"%$search%")->get();
+            }
+            else
+            {
+                $salaries = User::orderBy('name')->paginate(10);
+            }
+            return view('users.index', compact('salaries'));
         }
-        else
-        {
-            $salaries = User::orderBy('name')->paginate(10);
-        }
-        return view('users.index', compact('salaries'));
     }
 
     /**
@@ -35,9 +38,12 @@ class UserManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('users.create');
+        if($request->user()->can('create',User::class))
+        {
+            return view('users.create');
+        }
     }
 
     /**
@@ -89,11 +95,14 @@ class UserManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        $salarie = User::findOrFail($id);
-        return view('users.edit', compact('salarie'));
 
+        $salarie = User::findOrFail($id);
+        if($request->user()->can('update', $salarie))
+        {
+            return view('users.edit', compact('salarie'));
+        }
     }
 
     /**
@@ -106,17 +115,20 @@ class UserManagementController extends Controller
     public function update(Request $request, $id)
     {
         $salarie = User::findOrFail($id);
-        $request->validate([
-            'email'=>[
-                'required',
-                'email',
-            ],
-            'name'=> 'required',
-            'prenom'=> 'required',
-        ]);
-        $salarie->prenom = $request->input('prenom');
-        $salarie->update($request->input());
-        return redirect('users')->with('status','Les informations ont bien été modifiées');
+        if($request->user()->can('update', $salarie))
+        {
+            $request->validate([
+                'email'=>[
+                    'required',
+                    'email',
+                ],
+                'name'=> 'required',
+                'prenom'=> 'required',
+            ]);
+            $salarie->prenom = $request->input('prenom');
+            $salarie->update($request->input());
+            return redirect('users')->with('status','Les informations ont bien été modifiées');
+        }
     }
 
     /**
@@ -130,10 +142,13 @@ class UserManagementController extends Controller
 
     }
 
-    public function remove($id)
+    public function remove(Request $request, $id)
     {
-        $salarie = User::findOrFail($id);
-        return view('users.remove', compact('salarie'));
+        if($request->user()->can('viewAny',User::class))
+        {
+            $salarie = User::findOrFail($id);
+            return view('users.remove', compact('salarie'));
+        }
     }
 
     public function delete($id)

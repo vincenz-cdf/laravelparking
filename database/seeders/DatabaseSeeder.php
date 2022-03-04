@@ -19,7 +19,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(5)->create();
-        \App\Models\Place::factory(10)->create();
+        
+        for($i=0;$i<=10;$i++)
+        {
+            $libelle = 'A0';
+            $libelle .= $i;
+            Place::create([
+                'libelle' => $libelle,
+            ]);
+        }
+
 
         User::create([
             'name'=>'admin',
