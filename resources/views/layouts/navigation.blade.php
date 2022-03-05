@@ -9,5 +9,8 @@
       <li class="nav-item active">
         <a class="nav-link" href="{{route('places.index')}}">&#x2800 Places &#x2800<span class="sr-only"></span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{route('places.history')}}">&#x2800 Reservations &#x2800<span class="sr-only"></span></a>
+      </li>
     </ul>
 </div>

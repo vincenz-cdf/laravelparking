@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Place;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
@@ -13,19 +15,22 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $search = $request['search'] ?? "";
-        if($search != "")
+        if($request->user()->can('viewAny',User::class))
         {
-            $places = Place::where('libelle','LIKE',"%$search%")->get();
-        }
-        else
-        {
-            $places = Place::orderBy('id')->paginate(10);
-        }
+            $search = $request['search'] ?? "";
+            if($search != "")
+            {
+                $places = Place::where('libelle','LIKE',"%$search%")->get();
+            }
+            else
+            {
+                $places = Place::orderBy('id')->paginate(10);
+            }
 
-        return view('places.index', compact('places'));
+            return view('places.index', compact('places'));
+        }
     }
 
     /**
@@ -33,9 +38,12 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('places.create');
+        if($request->user()->can('create',User::class))
+        {
+            return view('places.create');
+        }
     }
 
     /**
@@ -74,10 +82,13 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
         $place = Place::findOrFail($id);
-        return view('places.edit', compact('place'));
+        if($request->user()->can('update', $place))
+        {
+            return view('places.edit', compact('place'));
+        }
     }
 
     /**
@@ -90,13 +101,16 @@ class PlaceController extends Controller
     public function update(Request $request, $id)
     {
         $place = Place::findOrFail($id);
-        $request->validate([
-            'libelle'=> 'required',
-        ]);
+        if($request->user()->can('update', $place))
+        {
+            $request->validate([
+                'libelle'=> 'required',
+            ]);
 
-        $place->libelle = $request->input('libelle');
-        $place->update();
-        return redirect('places')->with('status','Les informations ont bien été modifiées');
+            $place->libelle = $request->input('libelle');
+            $place->update();
+            return redirect('places')->with('status','Les informations ont bien été modifiées');
+        }
     }
 
     /**
@@ -110,10 +124,13 @@ class PlaceController extends Controller
         //
     }
 
-    public function downgrade($id)
+    public function downgrade(Request $request, $id)
     {
-        $place = Place::findOrFail($id);
-        return view('places.remove', compact('place'));
+        if($request->user()->can('viewAny',User::class))
+        {
+            $place = Place::findOrFail($id);
+            return view('places.remove', compact('place'));
+        }
     }
 
     public function erase($id)
@@ -121,5 +138,33 @@ class PlaceController extends Controller
         $place = Place::findOrFail($id);
         $place->forceDelete();
         return redirect('places')->with('status','La place a été supprimé');
+    }
+
+    public function history(Request $request)
+    {
+        if($request->user()->can('viewAny',User::class))
+        {
+            $search = $request['search'] ?? "";
+            if($search != "")
+            {
+                $reservations = DB::table('reservations')
+                ->join('users', 'reservations.user_id','=','users.id')
+                ->join('places', 'reservations.place_id','=','places.id')
+                ->where('libelle','LIKE',"%$search%")
+                ->orWhere('email','LIKE',"%$search%")
+                ->paginate(10);
+            }
+            else
+            {
+                $reservations = DB::table('reservations')
+                ->select('reservations.created_at', 'name', 'libelle')
+                ->join('users', 'reservations.user_id','=','users.id')
+                ->join('places', 'reservations.place_id','=','places.id')
+                ->orderBy('reservations.created_at', 'desc')
+                ->paginate(10);
+            }
+
+            return view('places.history', compact('reservations'));
+        }
     }
 }

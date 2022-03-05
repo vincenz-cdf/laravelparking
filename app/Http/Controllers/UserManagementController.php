@@ -7,6 +7,7 @@ use App\Models\Place;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class UserManagementController extends Controller
@@ -18,16 +19,21 @@ class UserManagementController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request['search'] ?? "";
-        if($search != "")
+        if($request->user()->can('viewAny',User::class))
         {
-            $salaries = User::where('name','LIKE',"%$search%")->orWhere('email','LIKE',"%$search%")->get();
+            $search = $request['search'] ?? "";
+            if($search != "")
+            {
+                $salaries = User::where('name','LIKE',"%$search%")
+                ->orWhere('email','LIKE',"%$search%")
+                ->paginate(10);
+            }
+            else
+            {
+                $salaries = User::orderBy('name')->paginate(10);
+            }
+            return view('users.index', compact('salaries'));
         }
-        else
-        {
-            $salaries = User::orderBy('name')->paginate(10);
-        }
-        return view('users.index', compact('salaries'));
     }
 
     /**
@@ -35,9 +41,12 @@ class UserManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('users.create');
+        if($request->user()->can('create',User::class))
+        {
+            return view('users.create');
+        }
     }
 
     /**
@@ -78,9 +87,21 @@ class UserManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $salarie=User::findOrFail($id);
+        if($request->user()->can('view', $salarie))
+        {
+            $reservations = DB::table('reservations')
+            ->select('reservations.created_at', 'libelle')
+            ->join('users', 'reservations.user_id','=','users.id')
+            ->join('places', 'reservations.place_id','=','places.id')
+            ->where('user_id', $id)
+            ->orderBy('reservations.created_at', 'desc')
+            ->paginate(10);
+
+            return view('salarie.history', compact('reservations'));
+        }
     }
 
     /**
@@ -89,11 +110,14 @@ class UserManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        $salarie = User::findOrFail($id);
-        return view('users.edit', compact('salarie'));
 
+        $salarie = User::findOrFail($id);
+        if($request->user()->can('update', $salarie))
+        {
+            return view('users.edit', compact('salarie'));
+        }
     }
 
     /**
@@ -106,17 +130,20 @@ class UserManagementController extends Controller
     public function update(Request $request, $id)
     {
         $salarie = User::findOrFail($id);
-        $request->validate([
-            'email'=>[
-                'required',
-                'email',
-            ],
-            'name'=> 'required',
-            'prenom'=> 'required',
-        ]);
-        $salarie->prenom = $request->input('prenom');
-        $salarie->update($request->input());
-        return redirect('users')->with('status','Les informations ont bien été modifiées');
+        if($request->user()->can('update', $salarie))
+        {
+            $request->validate([
+                'email'=>[
+                    'required',
+                    'email',
+                ],
+                'name'=> 'required',
+                'prenom'=> 'required',
+            ]);
+            $salarie->prenom = $request->input('prenom');
+            $salarie->update($request->input());
+            return redirect('users')->with('status','Les informations ont bien été modifiées');
+        }
     }
 
     /**
@@ -130,10 +157,13 @@ class UserManagementController extends Controller
 
     }
 
-    public function remove($id)
+    public function remove(Request $request, $id)
     {
-        $salarie = User::findOrFail($id);
-        return view('users.remove', compact('salarie'));
+        if($request->user()->can('viewAny',User::class))
+        {
+            $salarie = User::findOrFail($id);
+            return view('users.remove', compact('salarie'));
+        }
     }
 
     public function delete($id)
