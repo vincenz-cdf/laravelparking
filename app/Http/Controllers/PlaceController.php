@@ -152,18 +152,19 @@ class PlaceController extends Controller
                 ->join('places', 'reservations.place_id','=','places.id')
                 ->where('libelle','LIKE',"%$search%")
                 ->orWhere('email','LIKE',"%$search%")
-                ->get();
+                ->paginate(10);
             }
             else
             {
                 $reservations = DB::table('reservations')
+                ->select('reservations.created_at', 'name', 'libelle')
                 ->join('users', 'reservations.user_id','=','users.id')
                 ->join('places', 'reservations.place_id','=','places.id')
-                ->orderBy('reservations.created_at')
-                ->get();
+                ->orderBy('reservations.created_at', 'desc')
+                ->paginate(10);
             }
 
-            return view('places.history', compact('reservations', 'dates'));
+            return view('places.history', compact('reservations'));
         }
     }
 }

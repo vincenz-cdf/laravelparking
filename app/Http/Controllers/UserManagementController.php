@@ -7,6 +7,7 @@ use App\Models\Place;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class UserManagementController extends Controller
@@ -23,7 +24,9 @@ class UserManagementController extends Controller
             $search = $request['search'] ?? "";
             if($search != "")
             {
-                $salaries = User::where('name','LIKE',"%$search%")->orWhere('email','LIKE',"%$search%")->get();
+                $salaries = User::where('name','LIKE',"%$search%")
+                ->orWhere('email','LIKE',"%$search%")
+                ->paginate(10);
             }
             else
             {
@@ -84,9 +87,21 @@ class UserManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $salarie=User::findOrFail($id);
+        if($request->user()->can('view', $salarie))
+        {
+            $reservations = DB::table('reservations')
+            ->select('reservations.created_at', 'libelle')
+            ->join('users', 'reservations.user_id','=','users.id')
+            ->join('places', 'reservations.place_id','=','places.id')
+            ->where('user_id', $id)
+            ->orderBy('reservations.created_at', 'desc')
+            ->paginate(10);
+
+            return view('salarie.history', compact('reservations'));
+        }
     }
 
     /**

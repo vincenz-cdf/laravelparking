@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        <h4>Reservations</h4>
+        <h4>Historique des reservations</h4>
     </h2>
 </div>
 @if (session('status'))
@@ -19,14 +19,7 @@
             <div class="container">
             <a href="{{ url()->previous() }}"><button class="btn btn-secondary btn-sm">&#x21A9 Retour</button></a>
             </div>
-            <form action="">
-                {!! Form::open() !!}
-                    <div class="form-group" align="center">
-                        {{ Form::search('search', '', ['placeholder' => 'Rechercher par email ou place']) }}
-                        {{ Form::submit('Rechercher')}}
-                    </div>
-                {!! Form::close() !!}
-                <br>
+            <br>
 
             <div class="container">
                 <br>
@@ -34,22 +27,16 @@
                     <thead>
                         <tr align="center">
                             <th width="33%">
-                                Salarié
-                            </th>
-                            <th width="33%">
                                 Date
                             </th>
                             <th width="33%">
-                                Places
+                                Place
                             </th>
                         </tr>
                     </thead>
                     @forelse($reservations as $reservation)
                     <tbody align="center">
                         <tr>
-                            <td>
-                                {{ $reservation->name }}
-                            </td>
                             <td>
                                 {{ $reservation->created_at }}
                             </td>
