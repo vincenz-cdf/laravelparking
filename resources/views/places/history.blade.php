@@ -20,12 +20,12 @@
             <a href="{{ url()->previous() }}"><button class="btn btn-secondary btn-sm">&#x21A9 Retour</button></a>
             </div>
             <form action="">
-                {!! Form::open() !!}
+                { Form::open() }
                     <div class="form-group" align="center">
-                        {{ Form::search('search', '', ['placeholder' => 'Rechercher par email ou place']) }}
-                        {{ Form::submit('Rechercher')}}
+                        { Form::search('search', '', ['placeholder' => 'Rechercher par email ou place']) }
+                        { Form::submit('Rechercher')}
                     </div>
-                {!! Form::close() !!}
+                { Form::close() }
                 <br>
 
             <div class="container">
