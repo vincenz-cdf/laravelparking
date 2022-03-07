@@ -27,7 +27,7 @@ class PlaceController extends Controller
             }
             else
             {
-                $places = Place::orderBy('id')->paginate(10);
+                $places = Place::orderBy('libelle')->paginate(10);
             }
 
             return view('places.index', compact('places'));

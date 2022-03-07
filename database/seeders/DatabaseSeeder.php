@@ -23,8 +23,16 @@ class DatabaseSeeder extends Seeder
 
         for($i=1;$i<=30;$i++)
         {
-            $libelle = 'A0';
-            $libelle .= $i;
+            if($i <= 9)
+            {
+                $libelle = 'A0';
+                $libelle .= $i;
+            }
+            else
+            {
+                $libelle = 'A';
+                $libelle .= $i;
+            }
             Place::create([
                 'libelle' => $libelle,
             ]);
