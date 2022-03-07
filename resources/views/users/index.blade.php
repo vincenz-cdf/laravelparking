@@ -79,7 +79,11 @@
                             <span>Aucun compte n'a été crée</span>
                         @endforelse
                     </table>
-            </div>
-                <ul class="pagination justify-content-center mb-4">
-            </ul>               
+                    <br>
+                    <nav>
+                        <div>
+                            {!! $salaries->links() !!}
+                        </div>
+                    </nav>   
+            </div>           
 @endsection

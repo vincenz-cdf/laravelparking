@@ -62,7 +62,11 @@
                             <span>Aucune place n'a été crée</span>
                         @endforelse               
                     </table>
-            </div>
-                <ul class="pagination justify-content-center mb-4">
-            </ul>               
+                    <br>
+                    <nav>
+                        <div>
+                            {!! $reservations->links() !!}
+                        </div>
+                    </nav>   
+            </div>     
 @endsection
