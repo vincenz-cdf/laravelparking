@@ -7,6 +7,7 @@ use App\Models\Place;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PlaceController extends Controller
 {
@@ -85,9 +86,13 @@ class PlaceController extends Controller
     public function edit(Request $request,$id)
     {
         $place = Place::findOrFail($id);
-        if($request->user()->can('update', $place))
+        if(Auth::user()->admin === 1)
         {
             return view('places.edit', compact('place'));
+        }
+        else
+        {
+            return abort('403');
         }
     }
 
@@ -101,7 +106,7 @@ class PlaceController extends Controller
     public function update(Request $request, $id)
     {
         $place = Place::findOrFail($id);
-        if($request->user()->can('update', $place))
+        if(Auth::user()->admin === 1)
         {
             $request->validate([
                 'libelle'=> 'required',
@@ -110,6 +115,10 @@ class PlaceController extends Controller
             $place->libelle = $request->input('libelle');
             $place->update();
             return redirect('places')->with('status','Les informations ont bien été modifiées');
+        }
+        else
+        {
+            return abort('403');
         }
     }
 

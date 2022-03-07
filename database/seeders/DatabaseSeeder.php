@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-
         User::create([
             'name'=>'admin',
             'prenom'=>'admin',
