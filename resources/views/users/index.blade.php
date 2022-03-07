@@ -23,7 +23,7 @@
                 {!! Form::open() !!}
                     <div class="form-group" align="center">
                         {{ Form::search('search', '', ['placeholder' => 'Rechercher par nom ou email']) }}
-                        {{ Form::submit('Rechercher')}}
+                        {{ Form::submit('Rechercher', ['class' => 'btn btn-info'])}}
                     </div>
                 {!! Form::close() !!}
                 <br>
@@ -70,6 +70,15 @@
                             <td>
                                 <a href="{{route('users.remove', $salarie->id)}}"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
+                            @if($salarie->active == 0)
+                            <td>
+                                <a href="{{route('users.remove', $salarie->id)}}"><i class="fa-solid fa-user-xmark"></i></a>
+                            </td>
+                            @else
+                            <td>
+                                <a href="{{route('users.remove', $salarie->id)}}"><i class="fa-solid fa-user-check"></i></a>
+                            </td>
+                            @endif
                         </tr>
                         </tbody>
                         @empty

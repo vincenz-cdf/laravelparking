@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             'prenom'=>'admin',
             'email'=>'admin@mail.fr',
             'admin'=>1,
+            'active' =>1,
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'), // password
             'remember_token' => Str::random(10),
@@ -53,6 +54,7 @@ class DatabaseSeeder extends Seeder
             'prenom'=>'user',
             'email'=>'user@mail.fr',
             'admin'=>0,
+            'active' =>1,
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'), // password
             'remember_token' => Str::random(10),

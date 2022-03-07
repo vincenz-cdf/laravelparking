@@ -23,7 +23,7 @@
                 {!! Form::open() !!}
                     <div class="form-group" align="center">
                         {{ Form::search('search', '', ['placeholder' => 'Rechercher par nom de place']) }}
-                        {{ Form::submit('Rechercher')}}
+                        {{ Form::submit('Rechercher', ['class' => 'btn btn-info'])}}
                     </div>
                 {!! Form::close() !!}
                 <br>

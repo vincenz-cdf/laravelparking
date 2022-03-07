@@ -16,6 +16,7 @@ class AlterUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('prenom');
             $table->boolean('admin')->default(0);
+            $table->boolean('active')->default(0);
             $table->softDeletes();
         });
     }

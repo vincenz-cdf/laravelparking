@@ -23,7 +23,7 @@ class PlaceController extends Controller
             $search = $request['search'] ?? "";
             if($search != "")
             {
-                $places = Place::where('libelle','LIKE',"%$search%")->get();
+                $places = Place::where('libelle','LIKE',"%$search%")->paginate(10);
             }
             else
             {
