@@ -70,9 +70,6 @@
                             <td>
                                 <a href="{{route('users.remove', $salarie->id)}}"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
-                            <td>
-                                <a href=""><i class="fa-solid fa-user-large-slash"></i></a>
-                            </td>
                         </tr>
                         </tbody>
                         @empty
