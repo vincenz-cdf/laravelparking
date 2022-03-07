@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(5)->create();
         
-        for($i=0;$i<=30;$i++)
+
+        for($i=1;$i<=30;$i++)
         {
             $libelle = 'A0';
             $libelle .= $i;
