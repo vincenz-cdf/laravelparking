@@ -72,11 +72,11 @@
                             </td>
                             @if($salarie->active == 0)
                             <td>
-                                <a href="{{route('users.remove', $salarie->id)}}"><i class="fa-solid fa-user-xmark"></i></a>
+                                <a href="{{route('users.activate', $salarie->id)}}"><i class="fa-solid fa-user-xmark"></i></a>
                             </td>
                             @else
                             <td>
-                                <a href="{{route('users.remove', $salarie->id)}}"><i class="fa-solid fa-user-check"></i></a>
+                                <i class="fa-solid fa-user-check"></i>
                             </td>
                             @endif
                         </tr>

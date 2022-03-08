@@ -27,6 +27,9 @@ Route::resources([
     'dashboard'=>DashboardController::class
 ]);
 
+//Activer le compte
+Route::get('/users/active/{id}', [UserManagementController::class, 'activate'])->name('users.activate');
+
 //Historique
 Route::get('/history', [PlaceController::class, 'history'])->name('places.history');
 

@@ -187,4 +187,14 @@ class UserManagementController extends Controller
 
         return redirect(url()->previous());
     }
+
+    public function activate($id)
+    {
+        $salarie = User::findOrFail($id);
+        $salarie->active = 1;
+        $salarie->update();
+
+        return redirect('users')->with('salarie')
+        ->with('status', 'Le compte a été validé');
+    }
 }
