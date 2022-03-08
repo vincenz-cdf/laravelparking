@@ -41,6 +41,7 @@ Route::get('/delete/{id}/', [UserManagementController::class, 'delete'])->name('
 
 //route attribution place
 Route::get('/reserve', [UserManagementController::class, 'reserve'])->name('users.reserve');
+Route::get('/dereserve/{$id}', [UserManagementController::class, 'dereserve'])->name('users.dereserve');
 
 require __DIR__.'/auth.php';
 

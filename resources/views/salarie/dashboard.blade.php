@@ -12,6 +12,10 @@
         @forelse(Auth::User()->reservations as $reservation)
             Vous avez actuellement une place au :
             {{ $reservation->place->libelle }}
+            <br>
+            <a href="{{route('users.dereserve', $reservation->id)}}">
+                <button class="btn btn-warning"> Renoncer à la place </button>
+            </a>
         @empty
             <span>Vous n'avez actuellement pas de place attribué</span>
             <br>

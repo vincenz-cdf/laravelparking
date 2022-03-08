@@ -106,7 +106,7 @@ class UserManagementController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
+     *->with('salarie')
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -188,6 +188,13 @@ class UserManagementController extends Controller
         return redirect(url()->previous());
     }
 
+    public function dereserve($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
+        return redirect('dashboard')->with('reservation')->with('status','Action effectué');
+    }
+    
     public function activate($id)
     {
         $salarie = User::findOrFail($id);
