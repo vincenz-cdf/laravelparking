@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Place;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -60,12 +61,14 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
+        $newDateTime = Carbon::now()->addDay();
         for($i=1;$i<=5;$i++)
         {
             Reservation::create([
                 'duree' => 3600,
                 'user_id' => $i,
-                'place_id' => $i
+                'place_id' => $i,
+                'finished_at' => $newDateTime
             ]);
         }
 

@@ -33,14 +33,17 @@
                 <table cellpadding="2" cellspacing="0">
                     <thead>
                         <tr align="center">
-                            <th width="33%">
-                                Salarié
+                            <th width="30%">
+                                Date début
                             </th>
-                            <th width="33%">
-                                Date
+                            <th width="30%">
+                                Date fin
                             </th>
-                            <th width="33%">
-                                Places
+                            <th width="20%">
+                                Etat
+                            </th>
+                            <th width="20%">
+                                Place
                             </th>
                         </tr>
                     </thead>
@@ -48,15 +51,35 @@
                     <tbody align="center">
                         <tr>
                             <td>
-                                {{ $reservation->name }}
-                            </td>
-                            <td>
                                 {{ $reservation->created_at }}
                             </td>
+                            @if($reservation->deleted_at != NULL)
+                                <td>
+                                    {{ $reservation->deleted_at}}
+                                </td>
+                            @else
+                                <td>
+                                    {{ $reservation->finished_at}}
+                                </td>
+                            @endif
+                            @if($reservation->deleted_at != NULL)
+                                <td>
+                                    Annulé
+                                </td>
+                            @else
+                                @if($reservation->finished_at > $currentDateTime)
+                                    <td>
+                                        Occupé en ce moment
+                                    </td>
+                                @else
+                                    <td>
+                                        Terminé
+                                    </td>
+                                @endif
+                            @endif
                             <td>
                                 {{ $reservation->libelle }}
                             </td>
-                        </tr>
                         </tbody>
                         @empty
                             <span>Aucune place n'a été crée</span>

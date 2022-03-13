@@ -7,6 +7,7 @@ use App\Models\Place;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,18 +90,19 @@ class UserManagementController extends Controller
      */
     public function show(Request $request, $id)
     {
+        $currentDateTime = Carbon::now();
         $salarie=User::findOrFail($id);
         if($request->user()->can('view', $salarie))
         {
             $reservations = DB::table('reservations')
-            ->select('reservations.created_at', 'libelle')
+            ->select('reservations.created_at', 'libelle', 'reservations.deleted_at', 'reservations.finished_at')
             ->join('users', 'reservations.user_id','=','users.id')
             ->join('places', 'reservations.place_id','=','places.id')
             ->where('user_id', $id)
             ->orderBy('reservations.created_at', 'desc')
             ->paginate(10);
 
-            return view('salarie.history', compact('reservations'));
+            return view('salarie.history', compact('reservations', 'currentDateTime'));
         }
     }
 
@@ -175,13 +177,15 @@ class UserManagementController extends Controller
 
     public function reserve()
     {
-        $occupes = Reservation::select('place_id')->get();
+        $currentDateTime = Carbon::now();
+        $occupes = Reservation::select('place_id')->where('finished_at','>',$currentDateTime)->get();
         $places = Place::select('id')->get();
         $result = $places->diffKeys($occupes);
 
         $reservation = new Reservation;
         $reservation->user_id = Auth::user()->id;
         $reservation->place_id = $result->first()->id;
+        $reservation->finished_at = Carbon::now()->addDay();
         $reservation->duree = 3600;
         $reservation->save();
 
