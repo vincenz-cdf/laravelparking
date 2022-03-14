@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function index()
     {
         $currentDateTime = Carbon::now();
-        $reservations = Reservation::where('finished_at','>',$currentDateTime)->where('user_id',Auth::user())->get();
+        $reservations = Reservation::where('finished_at','>',$currentDateTime)->where('user_id',Auth::user()->id)->get();
 
         if(Auth::User()->admin === 1 && Auth::User()->active === 1)
             return view('users.dashboard');
