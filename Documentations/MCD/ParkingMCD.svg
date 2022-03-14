@@ -2,60 +2,74 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
 "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
-<svg width="295" height="263" view_box="0 0 295 263"
+<svg width="295" height="338" view_box="0 0 295 338"
 xmlns="http://www.w3.org/2000/svg"
-xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 le Sun, 27 Feb 2022 11:32:03</desc>
+xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 le Mon, 14 Mar 2022 11:45:42</desc>
 
-<rect id="frame" x="0" y="0" width="295" height="263" fill="#ffffbf" stroke="none" stroke-width="0"/>
+<rect id="frame" x="0" y="0" width="295" height="338" fill="#f7f7f7" stroke="none" stroke-width="0"/>
 
 <!-- Association réserver -->
-<line x1="144" y1="51" x2="253" y2="51" stroke="#66bd63" stroke-width="2"/>
-<text x="193" y="68.0" fill="#d73027" font-family="Verdana" font-size="12">1,1</text>
-<line x1="253" y1="186" x2="253" y2="51" stroke="#66bd63" stroke-width="2"/>
-<text x="258.0" y="144" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
+<line x1="144" y1="51" x2="253" y2="51" stroke="#9970ab" stroke-width="2"/>
+<text x="193" y="68.0" fill="#1b7837" font-family="Verdana" font-size="12">1,1</text>
+<line x1="253" y1="194" x2="253" y2="51" stroke="#9970ab" stroke-width="2"/>
+<text x="258.0" y="152" fill="#1b7837" font-family="Verdana" font-size="12">0,N</text>
 <g id="association-réserver">
-	<path d="M 272 26 a 14 14 90 0 1 14 14 V 51 h -66 V 40 a 14 14 90 0 1 14 -14" fill="#a6d96a" stroke="#a6d96a" stroke-width="0"/>
-	<path d="M 286 51.0 v 11 a 14 14 90 0 1 -14 14 H 234 a 14 14 90 0 1 -14 -14 V 51.0 H 66" fill="#d9ef8b" stroke="#d9ef8b" stroke-width="0"/>
-	<rect x="220" y="26" width="66" height="50" fill="none" rx="14" stroke="#66bd63" stroke-width="2"/>
-	<line x1="220" y1="51" x2="286" y2="51" stroke="#66bd63" stroke-width="1"/>
+	<path d="M 272 26 a 14 14 90 0 1 14 14 V 51 h -66 V 40 a 14 14 90 0 1 14 -14" fill="#c2a5cf" stroke="#c2a5cf" stroke-width="0"/>
+	<path d="M 286 51.0 v 11 a 14 14 90 0 1 -14 14 H 234 a 14 14 90 0 1 -14 -14 V 51.0 H 66" fill="#e7d4e8" stroke="#e7d4e8" stroke-width="0"/>
+	<rect x="220" y="26" width="66" height="50" fill="none" rx="14" stroke="#9970ab" stroke-width="2"/>
+	<line x1="220" y1="51" x2="286" y2="51" stroke="#9970ab" stroke-width="1"/>
 	<text x="227" y="43.7" fill="#000000" font-family="Verdana" font-size="12">réserver</text>
 </g>
 
 <!-- Association posseder -->
-<line x1="43" y1="186" x2="144" y2="186" stroke="#66bd63" stroke-width="2"/>
-<text x="82" y="203.0" fill="#d73027" font-family="Verdana" font-size="12">0,N</text>
-<line x1="144" y1="51" x2="144" y2="186" stroke="#66bd63" stroke-width="2"/>
-<text x="149.0" y="110" fill="#d73027" font-family="Verdana" font-size="12">1,1</text>
+<line x1="43" y1="194" x2="144" y2="194" stroke="#9970ab" stroke-width="2"/>
+<text x="82" y="211.0" fill="#1b7837" font-family="Verdana" font-size="12">0,N</text>
+<line x1="144" y1="51" x2="144" y2="194" stroke="#9970ab" stroke-width="2"/>
+<text x="149.0" y="110" fill="#1b7837" font-family="Verdana" font-size="12">1,1</text>
 <g id="association-posseder">
-	<path d="M 165 161 a 14 14 90 0 1 14 14 V 186 h -70 V 175 a 14 14 90 0 1 14 -14" fill="#a6d96a" stroke="#a6d96a" stroke-width="0"/>
-	<path d="M 179 186.0 v 11 a 14 14 90 0 1 -14 14 H 123 a 14 14 90 0 1 -14 -14 V 186.0 H 70" fill="#d9ef8b" stroke="#d9ef8b" stroke-width="0"/>
-	<rect x="109" y="161" width="70" height="50" fill="none" rx="14" stroke="#66bd63" stroke-width="2"/>
-	<line x1="109" y1="186" x2="179" y2="186" stroke="#66bd63" stroke-width="1"/>
-	<text x="116" y="178.7" fill="#000000" font-family="Verdana" font-size="12">posseder</text>
+	<path d="M 165 169 a 14 14 90 0 1 14 14 V 194 h -70 V 183 a 14 14 90 0 1 14 -14" fill="#c2a5cf" stroke="#c2a5cf" stroke-width="0"/>
+	<path d="M 179 194.0 v 11 a 14 14 90 0 1 -14 14 H 123 a 14 14 90 0 1 -14 -14 V 194.0 H 70" fill="#e7d4e8" stroke="#e7d4e8" stroke-width="0"/>
+	<rect x="109" y="169" width="70" height="50" fill="none" rx="14" stroke="#9970ab" stroke-width="2"/>
+	<line x1="109" y1="194" x2="179" y2="194" stroke="#9970ab" stroke-width="1"/>
+	<text x="116" y="186.7" fill="#000000" font-family="Verdana" font-size="12">posseder</text>
+</g>
+
+<!-- Entity Reglage -->
+<g id="entity-Reglage">
+	<g id="frame-Reglage">
+		<rect x="114" y="261" width="60" height="25" fill="#a6dba0" stroke="#a6dba0" stroke-width="0"/>
+		<rect x="114" y="286.0" width="60" height="43" fill="#d9f0d3" stroke="#d9f0d3" stroke-width="0"/>
+		<rect x="114" y="261" width="60" height="68" fill="none" stroke="#5aae61" stroke-width="2"/>
+		<line x1="114" y1="286" x2="174" y2="286" stroke="#5aae61" stroke-width="1"/>
+	</g>
+	<text x="119" y="278.7" fill="#000000" font-family="Verdana" font-size="12">Reglage</text>
+	<text x="119" y="303.8" fill="#000000" font-family="Verdana" font-size="12">id</text>
+	<line x1="119" y1="306" x2="131" y2="306" stroke="#000000" stroke-width="1"/>
+	<text x="119" y="320.8" fill="#000000" font-family="Verdana" font-size="12">durée</text>
 </g>
 
 <!-- Entity Reservations -->
 <g id="entity-Reservations">
 	<g id="frame-Reservations">
-		<rect x="100" y="9" width="88" height="25" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
-		<rect x="100" y="34.0" width="88" height="59" fill="#fee08b" stroke="#fee08b" stroke-width="0"/>
-		<rect x="100" y="9" width="88" height="84" fill="none" stroke="#f46d43" stroke-width="2"/>
-		<line x1="100" y1="34" x2="188" y2="34" stroke="#f46d43" stroke-width="1"/>
+		<rect x="100" y="9" width="88" height="25" fill="#a6dba0" stroke="#a6dba0" stroke-width="0"/>
+		<rect x="100" y="34.0" width="88" height="59" fill="#d9f0d3" stroke="#d9f0d3" stroke-width="0"/>
+		<rect x="100" y="9" width="88" height="84" fill="none" stroke="#5aae61" stroke-width="2"/>
+		<line x1="100" y1="34" x2="188" y2="34" stroke="#5aae61" stroke-width="1"/>
 	</g>
 	<text x="105" y="26.7" fill="#000000" font-family="Verdana" font-size="12">Reservations</text>
 	<text x="105" y="51.8" fill="#000000" font-family="Verdana" font-size="12">id</text>
 	<line x1="105" y1="54" x2="117" y2="54" stroke="#000000" stroke-width="1"/>
-	<text x="105" y="68.8" fill="#000000" font-family="Verdana" font-size="12">timestamps</text>
-	<text x="105" y="85.8" fill="#000000" font-family="Verdana" font-size="12">date</text>
+	<text x="105" y="68.8" fill="#000000" font-family="Verdana" font-size="12">date_début</text>
+	<text x="105" y="85.8" fill="#000000" font-family="Verdana" font-size="12">date_fin</text>
 </g>
 
 <!-- Entity Users -->
 <g id="entity-Users">
 	<g id="frame-Users">
-		<rect x="9" y="118" width="68" height="25" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
-		<rect x="9" y="143.0" width="68" height="111" fill="#fee08b" stroke="#fee08b" stroke-width="0"/>
-		<rect x="9" y="118" width="68" height="136" fill="none" stroke="#f46d43" stroke-width="2"/>
-		<line x1="9" y1="143" x2="77" y2="143" stroke="#f46d43" stroke-width="1"/>
+		<rect x="9" y="118" width="68" height="25" fill="#a6dba0" stroke="#a6dba0" stroke-width="0"/>
+		<rect x="9" y="143.0" width="68" height="127" fill="#d9f0d3" stroke="#d9f0d3" stroke-width="0"/>
+		<rect x="9" y="118" width="68" height="152" fill="none" stroke="#5aae61" stroke-width="2"/>
+		<line x1="9" y1="143" x2="77" y2="143" stroke="#5aae61" stroke-width="1"/>
 	</g>
 	<text x="25" y="135.7" fill="#000000" font-family="Verdana" font-size="12">Users</text>
 	<text x="14" y="160.7" fill="#000000" font-family="Verdana" font-size="12">id</text>
@@ -65,19 +79,20 @@ xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 l
 	<text x="14" y="211.8" fill="#000000" font-family="Verdana" font-size="12">email</text>
 	<text x="14" y="228.8" fill="#000000" font-family="Verdana" font-size="12">password</text>
 	<text x="14" y="245.8" fill="#000000" font-family="Verdana" font-size="12">isadmin</text>
+	<text x="14" y="262.8" fill="#000000" font-family="Verdana" font-size="12">active</text>
 </g>
 
 <!-- Entity Places -->
 <g id="entity-Places">
 	<g id="frame-Places">
-		<rect x="229" y="152" width="48" height="25" fill="#fdae61" stroke="#fdae61" stroke-width="0"/>
-		<rect x="229" y="177.0" width="48" height="43" fill="#fee08b" stroke="#fee08b" stroke-width="0"/>
-		<rect x="229" y="152" width="48" height="68" fill="none" stroke="#f46d43" stroke-width="2"/>
-		<line x1="229" y1="177" x2="277" y2="177" stroke="#f46d43" stroke-width="1"/>
+		<rect x="229" y="160" width="48" height="25" fill="#a6dba0" stroke="#a6dba0" stroke-width="0"/>
+		<rect x="229" y="185.0" width="48" height="43" fill="#d9f0d3" stroke="#d9f0d3" stroke-width="0"/>
+		<rect x="229" y="160" width="48" height="68" fill="none" stroke="#5aae61" stroke-width="2"/>
+		<line x1="229" y1="185" x2="277" y2="185" stroke="#5aae61" stroke-width="1"/>
 	</g>
-	<text x="234" y="169.7" fill="#000000" font-family="Verdana" font-size="12">Places</text>
-	<text x="234" y="194.8" fill="#000000" font-family="Verdana" font-size="12">id</text>
-	<line x1="234" y1="197" x2="246" y2="197" stroke="#000000" stroke-width="1"/>
-	<text x="234" y="211.8" fill="#000000" font-family="Verdana" font-size="12">libelle</text>
+	<text x="234" y="177.7" fill="#000000" font-family="Verdana" font-size="12">Places</text>
+	<text x="234" y="202.8" fill="#000000" font-family="Verdana" font-size="12">id</text>
+	<line x1="234" y1="205" x2="246" y2="205" stroke="#000000" stroke-width="1"/>
+	<text x="234" y="219.8" fill="#000000" font-family="Verdana" font-size="12">libelle</text>
 </g>
 </svg>

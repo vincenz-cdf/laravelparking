@@ -1,7 +1,9 @@
 :
-Reservations: id, timestamps, date
+Reservations: id, date_début, date_fin
 réserver, 11 Reservations, 0N Places:
 
-Users: id, nom, prenom, email, password, isadmin
+Users: id, nom, prenom, email, password, isadmin, active
 posseder, 0N Users, 11 Reservations:
 Places: id, libelle
+
+Reglage: id, durée
