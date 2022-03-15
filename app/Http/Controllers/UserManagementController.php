@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Place;
+use App\Models\Settings;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -142,7 +143,6 @@ class UserManagementController extends Controller
                 'name'=> 'required',
                 'prenom'=> 'required',
             ]);
-            $salarie->prenom = $request->input('prenom');
             $salarie->update($request->input());
             return redirect('users')->with('status','Les informations ont bien été modifiées');
         }
@@ -178,6 +178,7 @@ class UserManagementController extends Controller
     public function reserve()
     {
         $currentDateTime = Carbon::now();
+        $currentSetting = Settings::select('duree')->get();
         $occupes = Reservation::select('place_id')->where('finished_at','>',$currentDateTime)->get();
         $places = Place::select('id')->get();
         $result = $places->diffKeys($occupes);
@@ -185,8 +186,7 @@ class UserManagementController extends Controller
         $reservation = new Reservation;
         $reservation->user_id = Auth::user()->id;
         $reservation->place_id = $result->first()->id;
-        $reservation->finished_at = Carbon::now()->addDay();
-        $reservation->duree = 3600;
+        $reservation->finished_at = Carbon::now()->addDays($currentSetting);
         $reservation->save();
 
         return redirect(url()->previous());

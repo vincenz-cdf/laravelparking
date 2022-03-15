@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Place;
+use App\Models\Settings;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -20,7 +21,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(5)->create();
-        
+
+        Settings::create([
+            'duree' => 1,
+        ]);
 
         for($i=1;$i<=30;$i++)
         {

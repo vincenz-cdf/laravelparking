@@ -19,7 +19,6 @@ class CreateReservationsTable extends Migration
             $table->timestamp('finished_at');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
-            $table->integer('duree');
             $table->softDeletes();
         });
     }
