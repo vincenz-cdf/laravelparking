@@ -69,7 +69,6 @@ class DatabaseSeeder extends Seeder
         for($i=1;$i<=5;$i++)
         {
             Reservation::create([
-                'duree' => 3600,
                 'user_id' => $i,
                 'place_id' => $i,
                 'finished_at' => $newDateTime

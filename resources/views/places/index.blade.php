@@ -55,20 +55,20 @@
                             <td>
                                 {{ $place->libelle }}
                             </td>
-                            @if(isset($place->reservations[0]))
+                            @if(isset($place->reservations->finished_at) && $place->reservations->finished_at > $currentDateTime)
                                 <td>
-                                    Occupé par {{ $place->reservations[0]->user->name}}
+                                    Occupé par {{$place->reservations->user->name}}
                                 </td>
                             @else
                                 <td>
-                                    Libre
+                                    Libre 
                                 </td>
                             @endif
                             <td>
-                                <a href="{{route('places.edit', $place->id)}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href=""><i class="fa-solid fa-pen-to-square"></i></a>
                             </td>
                             <td>
-                                <a href="{{route('places.downgrade', $place->id)}}"><i class="fa-solid fa-trash-can"></i></a>
+                                <a href=""><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         </tr>
                         </tbody>

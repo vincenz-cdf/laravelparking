@@ -29,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
         'dashboard'=>DashboardController::class
     ]);
 
+    //Page réglage
+    Route::get('/settings', [UserManagementController::class, 'setduree'])->name('users.setduree');
+    Route::post('/settings/update', [UserManagementController::class, 'updateduree'])->name('users.updateduree');
+
     //Activer le compte
     Route::get('/users/active/{id}', [UserManagementController::class, 'activate'])->name('users.activate');
 

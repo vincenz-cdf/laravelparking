@@ -76,7 +76,7 @@
                         </tr>
                         </tbody>
                         @empty
-                            <span>Aucune place n'a été crée</span>
+                            <span>Aucune place n'a été réservé</span>
                         @endforelse               
                     </table>
             </div>

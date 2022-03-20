@@ -178,7 +178,7 @@ class UserManagementController extends Controller
     public function reserve()
     {
         $currentDateTime = Carbon::now();
-        $currentSetting = Settings::select('duree')->get();
+        $currentSetting = Settings::select('duree')->value('duree');
         $occupes = Reservation::select('place_id')->where('finished_at','>',$currentDateTime)->get();
         $places = Place::select('id')->get();
         $result = $places->diffKeys($occupes);
@@ -207,5 +207,24 @@ class UserManagementController extends Controller
 
         return redirect('users')->with('salarie')
         ->with('status', 'Le compte a été validé');
+    }
+
+    public function setduree(Request $request)
+    {
+        $duree = Settings::select('duree')->value('duree');
+        if($request->user()->can('viewAny',User::class))
+        {
+            return view('users.setduree', compact('duree'));
+        }
+    }
+
+    public function updateduree(Request $request)
+    {
+        $modif = $request['modif'];
+        $setting = Settings::firstWhere('id', 1);
+        $setting->duree = $modif;
+        $setting->update();
+        return redirect('users')
+        ->with('status', 'Réglage effectué !');
     }
 }

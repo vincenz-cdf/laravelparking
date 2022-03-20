@@ -21,6 +21,7 @@ class PlaceController extends Controller
     {
         if($request->user()->can('viewAny',User::class))
         {
+            $currentDateTime = Carbon::now();
             $search = $request['search'] ?? "";
             if($search != "")
             {
@@ -30,8 +31,7 @@ class PlaceController extends Controller
             {
                 $places = Place::orderBy('libelle')->paginate(10);
             }
-
-            return view('places.index', compact('places'));
+            return view('places.index', compact('places', 'currentDateTime'));
         }
     }
 

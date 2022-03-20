@@ -12,5 +12,9 @@
       <li class="nav-item active">
         <a class="nav-link" href="{{route('places.history')}}">&#x2800 Reservations &#x2800<span class="sr-only"></span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{route('users.setduree')}}">&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800&#x2800
+          <i class="fa-solid fa-gear"></i><span class="sr-only"></span></a>
+        </li>
     </ul>
 </div>
