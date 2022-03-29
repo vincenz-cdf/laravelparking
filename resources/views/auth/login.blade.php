@@ -4,6 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if(session('status'))
+            <div class="alert alert-warning">
+                <br>
+                <h4 align="center">{{ session('status') }}</h4>
+            </div>
+            @endif
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 

@@ -13,8 +13,8 @@
 <div>
   <span class='relation'>Reservations</span> (
     <span class='primary'>id</span>,
-    <span class='normal'>timestamps</span>,
-    <span class='normal'>date</span>,
+    <span class='normal'>date_début</span>,
+    <span class='normal'>date_fin</span>,
     <span class='foreign'>id.1</span>,
     <span class='foreign'>id.2</span>
   )
@@ -26,13 +26,20 @@
     <span class='normal'>prenom</span>,
     <span class='normal'>email</span>,
     <span class='normal'>password</span>,
-    <span class='normal'>isadmin</span>
+    <span class='normal'>isadmin</span>,
+    <span class='normal'>active</span>
   )
 </div>
 <div>
   <span class='relation'>Places</span> (
     <span class='primary'>id</span>,
     <span class='normal'>libelle</span>
+  )
+</div>
+<div>
+  <span class='relation'>Reglage</span> (
+    <span class='primary'>id</span>,
+    <span class='normal'>durée</span>
   )
 </div>
 </div>

@@ -16,6 +16,7 @@
 5 - Creer une bd sur mysql <br>
 6 - Ouvrir le dossier .env copié manuellement et y inscrire le nom de la bd qui vient d'etre créer <br>
 7 - Sur terminal : faire php artisan migrate --seed <br>
-8 - Sur terminal : php artisan serve et ouvrir le site sur un navigateur <br>
+8 - Sur terminal : faire composer require laravelcollective/html
+9 - Sur terminal : php artisan serve et ouvrir le site sur un navigateur <br>
 
-8.1 - Si sur http://127.0.0.1:8000 une page blanche s'affiche, faites sur terminal : npm install puis npm run dev
+9.1 - Si sur http://127.0.0.1:8000 une page blanche s'affiche, faites sur terminal : npm install puis npm run dev

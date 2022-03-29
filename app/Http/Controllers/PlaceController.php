@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Models\Place;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PlaceController extends Controller
 {
@@ -19,17 +21,17 @@ class PlaceController extends Controller
     {
         if($request->user()->can('viewAny',User::class))
         {
+            $currentDateTime = Carbon::now();
             $search = $request['search'] ?? "";
             if($search != "")
             {
-                $places = Place::where('libelle','LIKE',"%$search%")->get();
+                $places = Place::where('libelle','LIKE',"%$search%")->paginate(10);
             }
             else
             {
-                $places = Place::orderBy('id')->paginate(10);
+                $places = Place::orderBy('libelle')->paginate(10);
             }
-
-            return view('places.index', compact('places'));
+            return view('places.index', compact('places', 'currentDateTime'));
         }
     }
 
@@ -85,9 +87,13 @@ class PlaceController extends Controller
     public function edit(Request $request,$id)
     {
         $place = Place::findOrFail($id);
-        if($request->user()->can('update', $place))
+        if(Auth::user()->admin === 1)
         {
             return view('places.edit', compact('place'));
+        }
+        else
+        {
+            return abort('403');
         }
     }
 
@@ -101,7 +107,7 @@ class PlaceController extends Controller
     public function update(Request $request, $id)
     {
         $place = Place::findOrFail($id);
-        if($request->user()->can('update', $place))
+        if(Auth::user()->admin === 1)
         {
             $request->validate([
                 'libelle'=> 'required',
@@ -110,6 +116,10 @@ class PlaceController extends Controller
             $place->libelle = $request->input('libelle');
             $place->update();
             return redirect('places')->with('status','Les informations ont bien été modifiées');
+        }
+        else
+        {
+            return abort('403');
         }
     }
 
@@ -142,6 +152,7 @@ class PlaceController extends Controller
 
     public function history(Request $request)
     {
+        $currentDateTime = Carbon::now();
         if($request->user()->can('viewAny',User::class))
         {
             $search = $request['search'] ?? "";
@@ -157,14 +168,14 @@ class PlaceController extends Controller
             else
             {
                 $reservations = DB::table('reservations')
-                ->select('reservations.created_at', 'name', 'libelle')
+                ->select('reservations.created_at', 'name', 'libelle', 'reservations.deleted_at', 'reservations.finished_at')
                 ->join('users', 'reservations.user_id','=','users.id')
                 ->join('places', 'reservations.place_id','=','places.id')
                 ->orderBy('reservations.created_at', 'desc')
                 ->paginate(10);
             }
 
-            return view('places.history', compact('reservations'));
+            return view('places.history', compact('reservations', 'currentDateTime'));
         }
     }
 }

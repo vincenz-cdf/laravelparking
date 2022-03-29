@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\DashboardController;
@@ -20,23 +21,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resources([
-    'users' => UserManagementController::class,
-    'places' => PlaceController::class,
-    'dashboard'=>DashboardController::class
-]);
+Route::middleware(['auth'])->group(function () {
 
-//Historique
-Route::get('/history', [PlaceController::class, 'history'])->name('places.history');
+    Route::resources([
+        'users' => UserManagementController::class,
+        'places' => PlaceController::class,
+        'dashboard'=>DashboardController::class
+    ]);
 
-//route custom pour delete
-Route::get('/remove/{id}/', [UserManagementController::class, 'remove'])->name('users.remove');
-Route::get('/downgrade/{id}/', [PlaceController::class, 'downgrade'])->name('places.downgrade');
-Route::get('/erase/{id}/', [PlaceController::class, 'erase'])->name('places.erase');
-Route::get('/delete/{id}/', [UserManagementController::class, 'delete'])->name('users.delete');
+    //Page réglage
+    Route::get('/settings', [UserManagementController::class, 'setduree'])->name('users.setduree');
+    Route::post('/settings/update', [UserManagementController::class, 'updateduree'])->name('users.updateduree');
 
-//route attribution place
-Route::get('/reserve', [UserManagementController::class, 'reserve'])->name('users.reserve');
+    //Activer le compte
+    Route::get('/users/active/{id}', [UserManagementController::class, 'activate'])->name('users.activate');
+
+    //Historique
+    Route::get('/history', [PlaceController::class, 'history'])->name('places.history');
+
+    //route custom pour delete
+    Route::get('/remove/{id}/', [UserManagementController::class, 'remove'])->name('users.remove');
+    Route::get('/downgrade/{id}/', [PlaceController::class, 'downgrade'])->name('places.downgrade');
+    Route::get('/erase/{id}/', [PlaceController::class, 'erase'])->name('places.erase');
+    Route::get('/delete/{id}/', [UserManagementController::class, 'delete'])->name('users.delete');
+
+    //route attribution place
+    Route::get('/reserve', [UserManagementController::class, 'reserve'])->name('users.reserve');
+    Route::get('/dereserve/{id}', [UserManagementController::class, 'dereserve'])->name('users.dereserve');
+});
 
 require __DIR__.'/auth.php';
 

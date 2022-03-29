@@ -23,7 +23,7 @@
                 {!! Form::open() !!}
                     <div class="form-group" align="center">
                         {{ Form::search('search', '', ['placeholder' => 'Rechercher par nom ou email']) }}
-                        {{ Form::submit('Rechercher')}}
+                        {{ Form::submit('Rechercher', ['class' => 'btn btn-info'])}}
                     </div>
                 {!! Form::close() !!}
                 <br>
@@ -70,16 +70,26 @@
                             <td>
                                 <a href="{{route('users.remove', $salarie->id)}}"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
+                            @if($salarie->active == 0)
                             <td>
-                                <a href=""><i class="fa-solid fa-user-large-slash"></i></a>
+                                <a href="{{route('users.activate', $salarie->id)}}"><i class="fa-solid fa-user-xmark"></i></a>
                             </td>
+                            @else
+                            <td>
+                                <i class="fa-solid fa-user-check"></i>
+                            </td>
+                            @endif
                         </tr>
                         </tbody>
                         @empty
                             <span>Aucun compte n'a été crée</span>
                         @endforelse
                     </table>
-            </div>
-                <ul class="pagination justify-content-center mb-4">
-            </ul>               
+                    <br>
+                    <nav>
+                        <div>
+                            {!! $salaries->links() !!}
+                        </div>
+                    </nav>   
+            </div>           
 @endsection

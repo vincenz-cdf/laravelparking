@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Place;
+use App\Models\Settings;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,24 +91,25 @@ class UserManagementController extends Controller
      */
     public function show(Request $request, $id)
     {
+        $currentDateTime = Carbon::now();
         $salarie=User::findOrFail($id);
         if($request->user()->can('view', $salarie))
         {
             $reservations = DB::table('reservations')
-            ->select('reservations.created_at', 'libelle')
+            ->select('reservations.created_at', 'libelle', 'reservations.deleted_at', 'reservations.finished_at')
             ->join('users', 'reservations.user_id','=','users.id')
             ->join('places', 'reservations.place_id','=','places.id')
             ->where('user_id', $id)
             ->orderBy('reservations.created_at', 'desc')
             ->paginate(10);
 
-            return view('salarie.history', compact('reservations'));
+            return view('salarie.history', compact('reservations', 'currentDateTime'));
         }
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
+     *->with('salarie')
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -140,7 +143,6 @@ class UserManagementController extends Controller
                 'name'=> 'required',
                 'prenom'=> 'required',
             ]);
-            $salarie->prenom = $request->input('prenom');
             $salarie->update($request->input());
             return redirect('users')->with('status','Les informations ont bien été modifiées');
         }
@@ -175,16 +177,54 @@ class UserManagementController extends Controller
 
     public function reserve()
     {
-        $occupes = Reservation::select('place_id')->get();
+        $currentDateTime = Carbon::now();
+        $currentSetting = Settings::select('duree')->value('duree');
+        $occupes = Reservation::select('place_id')->where('finished_at','>',$currentDateTime)->get();
         $places = Place::select('id')->get();
         $result = $places->diffKeys($occupes);
 
         $reservation = new Reservation;
         $reservation->user_id = Auth::user()->id;
         $reservation->place_id = $result->first()->id;
-        $reservation->duree = 3600;
+        $reservation->finished_at = Carbon::now()->addDays($currentSetting);
         $reservation->save();
 
         return redirect(url()->previous());
+    }
+
+    public function dereserve($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
+        return redirect('dashboard')->with('reservation')->with('status','Action effectué');
+    }
+    
+    public function activate($id)
+    {
+        $salarie = User::findOrFail($id);
+        $salarie->active = 1;
+        $salarie->update();
+
+        return redirect('users')->with('salarie')
+        ->with('status', 'Le compte a été validé');
+    }
+
+    public function setduree(Request $request)
+    {
+        $duree = Settings::select('duree')->value('duree');
+        if($request->user()->can('viewAny',User::class))
+        {
+            return view('users.setduree', compact('duree'));
+        }
+    }
+
+    public function updateduree(Request $request)
+    {
+        $modif = $request['modif'];
+        $setting = Settings::firstWhere('id', 1);
+        $setting->duree = $modif;
+        $setting->update();
+        return redirect('users')
+        ->with('status', 'Réglage effectué !');
     }
 }
