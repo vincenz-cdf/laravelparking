@@ -179,9 +179,9 @@ class UserManagementController extends Controller
     {
         $currentDateTime = Carbon::now();
         $currentSetting = Settings::select('duree')->value('duree');
-        $occupes = Reservation::select('place_id')->where('finished_at','>',$currentDateTime)->get();
+        $libres = Reservation::select('place_id')->where('finished_at','>',$currentDateTime)->get();
         $places = Place::select('id')->get();
-        $result = $places->diffKeys($occupes);
+        $result = $places->diffKeys($libres);
 
         $reservation = new Reservation;
         $reservation->user_id = Auth::user()->id;
