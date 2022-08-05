@@ -34,6 +34,9 @@
                     <thead>
                         <tr align="center">
                             <th width="30%">
+                                Employe
+                            </th>
+                            <th width="30%">
                                 Date début
                             </th>
                             <th width="30%">
@@ -49,7 +52,9 @@
                     </thead>
                     @forelse($reservations as $reservation)
                     <tbody align="center">
-                        <tr>
+                        <tr>                            <td>
+                            {{ $reservation->name }}
+                        </td>
                             <td>
                                 {{ $reservation->created_at }}
                             </td>
