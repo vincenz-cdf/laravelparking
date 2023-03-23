@@ -23,4 +23,6 @@ class DashboardController extends Controller
         Auth::guard('web')->logout();
         return redirect('/login')->with('status','Votre compte est en attente de validation');
     }
+
+
 }

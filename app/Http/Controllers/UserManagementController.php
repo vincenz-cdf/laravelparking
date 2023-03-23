@@ -12,6 +12,17 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Storage;
+
+use Google\ApiCore\ApiException;
+use Google\Auth\Credentials\ServiceAccountCredentials;
+use Google\Cloud\VideoIntelligence\V1\AnnotateVideoRequest;
+use Google\Cloud\VideoIntelligence\V1\Feature;
+use Google\Cloud\VideoIntelligence\V1\VideoContext;
+use Google\Cloud\VideoIntelligence\V1\VideoIntelligenceServiceClient;
+use Google\Protobuf\Duration;
+use Google\Protobuf\Internal\ByteString;
+
 class UserManagementController extends Controller
 {
     /**
@@ -176,6 +187,91 @@ class UserManagementController extends Controller
     }
 
     public function reserve()
+    {
+        // Authenticate with Google Cloud and create a VideoIntelligenceServiceClient
+        $credentials = json_decode('/path/to/key.json');
+
+        // Set up a request to analyze the video for interesting moments
+        $inputFolderPath = '/home/gard/Desktop/inputFolder';
+        $outputFolderPath = '/home/gard/Desktop/outputFolder/';
+        $inputFolder = Storage::files($inputFolderPath);
+        error_log("FFmpeg entering.\n");
+
+        $interestingMoments = [];
+
+        foreach ($inputFolder as $file) {
+            if (!$file->isDot() && strtolower($file->getExtension()) === 'mp4') {
+                $inputFilePath = $file->getRealPath();
+                $outputFilePath = $outputFolderPath . DIRECTORY_SEPARATOR . $file->getFilename();
+
+                $request = (new AnnotateVideoRequest())
+                    ->setInputContent(ByteString::readFromFile($inputFilePath))
+                    ->addFeatures(Feature::SHOT_CHANGE_DETECTION)
+                    ->addFeatures(Feature::EXPLICIT_CONTENT_DETECTION)
+                    ->addFeatures(Feature::LABEL_DETECTION)
+                    ->setVideoContext((new VideoContext())
+                        ->setExplicitContentDetectionConfig((new ExplicitContentDetectionConfig()))
+                        ->setShotChangeDetectionConfig((new ShotChangeDetectionConfig()))
+                    );
+
+                // Call the API asynchronously and process the response to get interesting moments
+                $operationResponse = $client->annotateVideoAsync($request);
+                $operationResponse->pollUntilComplete();
+
+                if ($operationResponse->operationSucceeded()) {
+                    error_log("FFmpeg process exited successfully.\n");
+                    $response = $operationResponse->getResult();
+                    $results = $response->getAnnotationResults()[0];
+
+                    foreach ($results->getShotAnnotations() as $segment) {
+                        $startTime = $segment->getStartTimeOffset();
+                        $endTime = $segment->getEndTimeOffset();
+                        $duration = ($endTime->getSeconds() - $startTime->getSeconds()) + ($endTime->getNanos() - $startTime->getNanos()) / 1e9;
+
+                        if ($duration < 11.0) {
+                            $start = $segment->getStartTimeOffset();
+                            $end = $segment->getEndTimeOffset();
+                            $interestingMoments[] = $start->getSeconds() . "-" . $end->getSeconds();
+                        }
+                    }
+                }
+
+                // Build the FFmpeg command
+                $commandBuilder = [];
+                $commandBuilder[] = "ffmpeg -i " . escapeshellarg($inputFilePath) . " -filter_complex ";
+                foreach ($interestingMoments as $i => $time) {
+                    $timeArr = explode("-", $time);
+                    $commandBuilder[] = "[0:v]trim=" . $timeArr[0] . ":" . $timeArr[1] . ",setpts=PTS-STARTPTS[v" . $i . "];[0:a]atrim=" . $timeArr[0] . ":" . $timeArr[1] . ",asetpts=PTS-STARTPTS[a" . $i . "];";
+                }
+
+                $commandBuilder[] = "[v0][a0]";
+
+                for ($i = 1; $i < count($interestingMoments); $i++) {
+                    $commandBuilder[] = "[v$i][a$i]";
+                }
+                
+                $commandBuilder[] = "concat=n=".count($interestingMoments).":v=1:a=1[v][a]\" -map \"[v]\" -map \"[a]\" -c:v libx264 -c:a aac $outputFilePath";
+                
+                // Execute the FFmpeg command
+                $command = implode(" ", $commandBuilder);
+                error_log("Going here\n");
+                error_log("Executing FFmpeg command: $command\n");
+                
+                if ($exitCode === 0) {
+                    error_log("FFmpeg process exited successfully.\n");
+                    return redirect(url()->previous());
+                } else {
+                    echo "FFmpeg process exited with code $exitCode. Error output: \n";
+                    error_log("FFmpeg process exited with code $exitCode. Error output: \n");
+
+                    return redirect(url()->previous());
+                
+                }
+            }
+        }
+    }
+
+    public function ser()
     {
         $currentDateTime = Carbon::now();
         $currentSetting = Settings::select('duree')->value('duree');
